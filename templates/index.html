@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+        table {
+            width: 60%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        #profile-section {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+    </style>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <h3>
+      Search Contacts
+      <span class="htmx-indicator">
+        <img src=""/> Searching...
+       </span>
+    </h3>
+    <form hx-params="*">
+        <input class="form-control" type="search" name="search" placeholder="Begin Typing To Search Users..."
+               hx-post="/search"
+               hx-trigger="keyup[target.value.length > 2] changed delay:500ms, search"
+               hx-target="#search-results"
+               hx-indicator=".htmx-indicator">
+    </form>
+    <div style="display: flex; align-items: start;">
+      <table class="table">
+          <thead>
+          <tr>
+            <th>Repo Name</th>
+          </tr>
+          </thead>
+          <tbody id="search-results">
+          </tbody>
+      </table>
+      <div id="profile-section" style="margin-left: 20px;">
+      </div>
+    </div>
+
+  <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+  </body>
+</html>
+

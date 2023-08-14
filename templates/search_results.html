@@ -1,0 +1,5 @@
+{% for item in data['items'] %}
+    <tr hx-get="/redirect-to-contributors?url={{ item.contributors_url }}" hx-swap="outerHTML">
+        <td style="cursor: pointer;">{{ item.name }}</td>
+    </tr>
+{% endfor %}
