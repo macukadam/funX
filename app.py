@@ -1,9 +1,15 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request
 import requests as r
+from autometrics import autometrics
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Application info', version='1.0.3')
+
 
 @app.post('/search')
+@autometrics
 def search():
     search_term = request.form.get('search')
     if not search_term or len(search_term) < 3:
@@ -15,6 +21,7 @@ def search():
 
 
 @app.route('/fetch-contributor')
+@autometrics
 def fetch_contributor():
     login = request.args.get('login')
     if not login:
@@ -30,9 +37,10 @@ def fetch_contributor():
 
 
 @app.get("/")
+@autometrics
 def index():
     return render_template("index.html")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
 
